@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Formulario WiFi y Configuración</title>
+  <style>
+    body {font-family: Arial; background-color: #f7f9fb; margin:0; padding:20px; display:flex; flex-direction:column; align-items:center;}
+    h1 {color:#2c3e50; text-align:center; margin-bottom:10px;}
+    h2 {color:#34495e; border-bottom:2px solid #3498db; padding-bottom:5px; margin-top:30px;}
+    form {background:#fff; padding:25px 40px; border-radius:12px; box-shadow:0 3px 10px rgba(0,0,0,0.1); width:400px;}
+    label {display:inline-block; width:200px; text-align:right; margin-right:10px; font-weight:bold; color:#333;}
+    input {width:160px; padding:6px; border:1px solid #ccc; border-radius:5px; font-size:14px;}
+    input[type="submit"], button {width:100%; background-color:#3498db; color:white; padding:10px; font-size:16px; border:none; border-radius:8px; margin-top:15px; cursor:pointer; transition:0.3s;}
+    input[type="submit"]:hover, button:hover {background-color:#0000b9;}
+    p {text-align:center; font-size:14px;}
+    .warning {color:red; margin-top:10px;}
+    .info {color:blue; margin-top:20px;}
+    .form-row {margin-bottom:12px;}
+    .reboot-form {width:400px; text-align:center;}
+  </style>
+</head>
+<body>
+  <form method="POST" action="/submit">
+    <h1> SISTEMA SCADA </h1>
+    <h2>Configuración WiFi</h2>
+    <div class="form-row">
+      <label for="wifi">SSID WiFi [20]:</label>
+      <input type="text" id="wifi" name="wifi" maxlength="20" required>
+    </div>
+    <div class="form-row">
+      <label for="pass">Contraseña WiFi [20]:</label>
+      <input type="text" id="pass" name="pass" maxlength="20" required>
+      <p class="warning">Los campos de SSID y Contraseña son obligatorios antes de enviar.</p>
+    </div>
+    <h2>Datos avanzados (Admin)</h2>
+    <div class="form-row"><label for="sheet">Google Sheet ID [70]:</label><input type="text" id="sheet" name="sheet" maxlength="70"></div>
+    <div class="form-row"><label for="rate">Rate Envío (max 10 min):</label><input type="number" id="rate" name="rate" min="1" max="10"></div>
+    <div class="form-row"><label for="client">ID Cliente [8]:</label><input type="text" id="client" name="client" maxlength="8"></div>
+    <div class="form-row"><label for="device">ID Dispositivo [8]:</label><input type="text" id="device" name="device" maxlength="8"></div>
+    <div class="form-row"><label for="auth">Contraseña (admin):</label><input type="password" id="auth" name="auth" maxlength="4"></div>
+    <p class="warning">Para cambiar un valor de administracion es necesario volver a introducirlos todos nuevamente.</p>
+    <input type="submit" name="action" value="Enviar">
+  </form>
+  <p class="info">El botón "Reboot" reiniciará el SCADA en modo Operación Normal.</p>
+  <form method="POST" action="/reboot" class="reboot-form">
+    <button type="submit">Reboot</button>
+  </form>
+  <form method="GET" action="/showconfig" class="reboot-form">
+  <button type="submit">Mostrar config actual</button>
+  </form>
+</body>
+</html>
