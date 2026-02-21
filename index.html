@@ -429,6 +429,7 @@
       <li><a href="#descripcion">Descripción</a></li>
       <li><a href="#pilares">Pilares</a></li>
       <li><a href="#objetivos">Objetivos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
     </ul>
   </nav>
 
@@ -588,28 +589,63 @@
     </div>
   </section>
 
+  <!-- CONTACTO -->
+  <section id="contacto" class="team-bg">
+    <div class="section-inner" style="text-align:center;">
+      <div class="section-label reveal">// 04 — Contacto</div>
+      <h2 class="section-title reveal">¿Hablamos?</h2>
+      <p class="reveal" style="color:var(--frost);line-height:1.8;font-weight:300;max-width:500px;margin:1rem auto 2.5rem;">
+        ¿Tienes máquinas de producción que necesitan supervisión en tiempo real? Escríbenos y evaluamos juntos la mejor solución SCADA para tu proceso.
+      </p>
+      <div class="reveal" style="display:inline-flex;align-items:center;gap:1.2rem;background:var(--mid);border:1px solid rgba(10,132,255,.25);border-top:2px solid var(--cyan);padding:1.5rem 2.5rem;">
+        <span style="font-size:1.8rem;">✉</span>
+        <div style="text-align:left;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--dim);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.3rem;">Email de contacto</div>
+          <a href="mailto:IOT.LABS@outlook.com" style="color:var(--cyan);text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:1.1rem;font-weight:500;transition:opacity .2s;"
+            onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">IOT.LABS@outlook.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-mark">IOT LABS 4.0</div>
     <div>Sistema operativo · <span style="color:var(--accent)">En línea</span></div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.3rem">
-      <a href="mailto:IOT.LABS@outlook.com" style="color:var(--cyan);text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.75rem;transition:opacity .2s;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">✉ IOT.LABS@outlook.com</a>
+      <a href="/cdn-cgi/l/email-protection#e0a9afb4ceaca1a2b3a08f95948c8f8f8bce838f8d" style="color:var(--cyan);text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.75rem;transition:opacity .2s;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">✉ <span class="__cf_email__" data-cfemail="eca5a3b8c2a0adaebfac83999880838387c28f8381">[email&#160;protected]</span></a>
       <span>© 2025 — Todos los derechos reservados</span>
     </div>
   </footer>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // Scroll reveal
     const els = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
-        if (e.isIntersecting) {
+               if (e.isIntersecting) {
           setTimeout(() => e.target.classList.add('visible'), i * 80);
           io.unobserve(e.target);
         }
       });
     }, { threshold: .15 });
     els.forEach(el => io.observe(el));
+
+    // Formulario de contacto
+    function enviarContacto(btn) {
+      const section = btn.closest('div');
+      const inputs = section.querySelectorAll('input, textarea');
+      let valid = true;
+      inputs.forEach(el => { if (!el.value.trim()) { el.style.borderColor = '#ff4d4d'; valid = false; } });
+      if (!valid) return;
+      btn.textContent = 'Enviando...';
+      btn.style.opacity = '.7';
+      setTimeout(() => {
+        btn.style.display = 'none';
+        document.getElementById('form-msg').style.display = 'block';
+        inputs.forEach(el => { el.value = ''; el.style.borderColor = 'rgba(10,132,255,.2)'; });
+      }, 1200);
+    }
   </script>
 </body>
 </html>
