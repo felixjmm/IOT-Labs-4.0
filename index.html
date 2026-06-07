@@ -247,63 +247,201 @@
       position: relative;
     }
 
-    /* ── PILLARS / PILARES ── */
+    /* ── PILARES (MOSAICO TIPO REVISTA) ── */
     .pillars-bg {
       background: var(--deep);
       border-top: 1px solid rgba(10,132,255,.15);
       border-bottom: 1px solid rgba(10,132,255,.15);
     }
 
-    .pillars-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3rem;
+    .tech-block {
+      margin-top: 5rem;
     }
 
-    .pillar-card {
-      background: var(--mid);
-      border: 1px solid rgba(10,132,255,.2);
-      border-top: 2px solid var(--accent);
-      padding: 2rem 1.5rem;
-      transition: border-color .3s, transform .3s;
-      position: relative;
-      overflow: hidden;
+    .tech-block:first-of-type { margin-top: 3rem; }
+
+    .tech-head {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      border-left: 3px solid var(--cyan);
+      padding-left: 1.2rem;
     }
 
-    .pillar-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(10,132,255,.05) 0%, transparent 60%);
-      pointer-events: none;
-    }
+    .tech-head .tech-icon { font-size: 1.8rem; }
 
-    .pillar-card:hover {
-      border-color: var(--cyan);
-      transform: translateY(-4px);
-    }
-
-    .pillar-icon {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-
-    .pillar-card h3 {
+    .tech-head h3 {
       font-family: 'Rajdhani', sans-serif;
       font-weight: 700;
-      font-size: 1.2rem;
-      letter-spacing: .05em;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      letter-spacing: .04em;
       text-transform: uppercase;
       color: var(--white);
-      margin-bottom: .6rem;
     }
 
-    .pillar-card p {
-      font-size: .88rem;
+    .tech-head p {
+      font-size: .9rem;
       color: var(--dim);
       line-height: 1.6;
+      max-width: 520px;
+      margin-left: auto;
+    }
+
+    @media(max-width:768px){
+      .tech-head { flex-direction: column; gap: .5rem; }
+      .tech-head p { margin-left: 0; }
+    }
+
+    /* Mosaico de 4 imágenes (PCB) */
+    .mosaic-7 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 150px;
+      gap: .75rem;
+    }
+    .mosaic-7 img:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+    .mosaic-7 img:nth-child(4) { grid-column: span 2; }
+
+    /* Mosaico de 2 imágenes (Procesos) */
+    .mosaic-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 240px;
+      gap: .75rem;
+    }
+
+    /* Imagen única ancha (SCADA) */
+    .mosaic-1 {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-auto-rows: 460px;
+      gap: .75rem;
+    }
+
+    .mosaic-7 img, .mosaic-2 img, .mosaic-1 img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: var(--navy);
+      border: 1px solid rgba(10,132,255,.25);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform .3s, border-color .3s, box-shadow .3s;
+      padding: .4rem;
+    }
+
+    .mosaic-7 img:hover, .mosaic-2 img:hover, .mosaic-1 img:hover {
+      transform: scale(1.02);
+      border-color: var(--cyan);
+      box-shadow: 0 6px 24px rgba(0,212,255,.25);
+      z-index: 5;
+    }
+
+    @media(max-width:768px){
+      .mosaic-7 { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 120px; }
+      .mosaic-7 img:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+      .mosaic-7 img:nth-child(4) { grid-column: span 2; }
+      .mosaic-2 { grid-template-columns: 1fr; grid-auto-rows: 220px; }
+      .mosaic-1 { grid-auto-rows: 240px; }
+    }
+
+    /* Pilar sin imágenes (Protocolos) */
+    .tech-note {
+      background: var(--mid);
+      border: 1px solid rgba(10,132,255,.2);
+      border-left: 3px solid var(--accent);
+      padding: 1.5rem 1.8rem;
+      margin-top: 1.5rem;
+      font-size: .9rem;
+      color: var(--frost);
+      line-height: 1.6;
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(2,6,14,.95);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      animation: fadeIn .25s ease;
+    }
+
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+    .lightbox.active { display: flex; }
+
+    .lightbox-content {
+      position: relative;
+      width: 90vw;
+      height: 88vh;
+      max-width: 1300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #lightbox-img {
+      max-width: 100%;
+      max-height: calc(100% - 60px);
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 12px 48px rgba(0,0,0,.6);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -10px;
+      right: 0;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color .2s;
+      line-height: 1;
+    }
+
+    .lightbox-close:hover { color: var(--cyan); }
+
+    .lightbox-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(10,132,255,.2);
+      border: 1px solid rgba(10,132,255,.5);
+      color: var(--cyan);
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background .2s;
+      font-size: 1.3rem;
+      border-radius: 3px;
+    }
+
+    .lightbox-arrow:hover { background: rgba(10,132,255,.5); }
+    .lightbox-arrow.prev { left: -1rem; }
+    .lightbox-arrow.next { right: -1rem; }
+
+    .lightbox-counter {
+      margin-top: 1.2rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .85rem;
+      color: var(--frost);
+      letter-spacing: .1em;
+    }
+
+    @media(max-width:768px){
+      .lightbox-arrow.prev { left: .2rem; }
+      .lightbox-arrow.next { right: .2rem; }
     }
 
     /* ── OBJETIVOS ── */
@@ -352,54 +490,8 @@
       line-height: 1.6;
     }
 
-    /* ── TEAM ── */
+    /* ── TEAM / CONTACTO BG ── */
     .team-bg { background: var(--deep); border-top: 1px solid rgba(10,132,255,.15); }
-
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-
-    .member-card {
-      background: var(--mid);
-      border: 1px solid rgba(10,132,255,.15);
-      padding: 2rem 1.5rem;
-      text-align: center;
-      transition: border-color .3s;
-    }
-
-    .member-card:hover { border-color: rgba(0,212,255,.4); }
-
-    .avatar {
-      width: 72px; height: 72px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--steel), var(--accent));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 700;
-      font-size: 1.4rem;
-      color: white;
-      margin: 0 auto 1rem;
-    }
-
-    .member-card h4 {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-    }
-
-    .member-card p {
-      font-size: .78rem;
-      color: var(--dim);
-      margin-top: .3rem;
-      font-family: 'IBM Plex Mono', monospace;
-    }
 
     /* ── FOOTER ── */
     footer {
@@ -521,33 +613,64 @@
     </div>
   </section>
 
-  <!-- PILARES -->
+  <!-- PILARES (MOSAICO TIPO REVISTA) -->
   <section id="pilares" class="pillars-bg">
     <div class="section-inner">
       <div class="section-label reveal">// 02 — Tecnologías</div>
       <h2 class="section-title reveal">Pilares<br>Tecnológicos</h2>
-      <div class="pillars-grid">
-        <div class="pillar-card reveal">
-          <span class="pillar-icon">🔌</span>
+
+      <!-- PLACAS DE ADQUISICIÓN -->
+      <div class="tech-block reveal">
+        <div class="tech-head">
+          <span class="tech-icon">🔌</span>
           <h3>Placas de Adquisición</h3>
           <p>Hardware embebido instalado en máquinas para captura de señales analógicas y digitales en campo.</p>
         </div>
-        <div class="pillar-card reveal">
-          <span class="pillar-icon">📡</span>
+        <div class="mosaic-7" data-gallery="pcb">
+          <img src="Fotos PCB/Fotos PCB (1).png" alt="PCB 1" onclick="openLightbox('pcb', 0)">
+          <img src="Fotos PCB/Fotos PCB (2).png" alt="PCB 2" onclick="openLightbox('pcb', 1)">
+          <img src="Fotos PCB/Fotos PCB (3).png" alt="PCB 3" onclick="openLightbox('pcb', 2)">
+          <img src="Fotos PCB/Fotos PCB (4).png" alt="PCB 4" onclick="openLightbox('pcb', 3)">
+        </div>
+      </div>
+
+      <!-- PROTOCOLOS INDUSTRIALES -->
+      <div class="tech-block reveal">
+        <div class="tech-head">
+          <span class="tech-icon">📡</span>
           <h3>Protocolos Industriales</h3>
           <p>Comunicación mediante Modbus, MQTT, OPC-UA para integración con PLCs y sistemas existentes.</p>
         </div>
-        <div class="pillar-card reveal">
-          <span class="pillar-icon">🖥️</span>
+        <div class="tech-note">
+          Compatibilidad nativa con <strong>Modbus RTU/TCP</strong>, <strong>MQTT</strong> y <strong>OPC-UA</strong>, garantizando la integración con la infraestructura de automatización existente.
+        </div>
+      </div>
+
+      <!-- SCADA CENTRALIZADO -->
+      <div class="tech-block reveal">
+        <div class="tech-head">
+          <span class="tech-icon">🖥️</span>
           <h3>SCADA Centralizado</h3>
           <p>Plataforma de supervisión con HMI en tiempo real, alarmas configurables y registro histórico.</p>
         </div>
-        <div class="pillar-card reveal">
-          <span class="pillar-icon">📊</span>
+        <div class="mosaic-1" data-gallery="scada">
+          <img src="Fotos Scada/Foto Scada Centralizado.png" alt="SCADA Dashboard" onclick="openLightbox('scada', 0)">
+        </div>
+      </div>
+
+      <!-- ANÁLISIS DE PROCESO -->
+      <div class="tech-block reveal">
+        <div class="tech-head">
+          <span class="tech-icon">📊</span>
           <h3>Análisis de Proceso</h3>
           <p>Visualización de tendencias, reportes de producción y detección de anomalías en variables críticas.</p>
         </div>
+        <div class="mosaic-2" data-gallery="proceso">
+          <img src="Fotos Procesos/Proceso1.png" alt="Proceso 1" onclick="openLightbox('proceso', 0)">
+          <img src="Fotos Procesos/Proceso2.png" alt="Proceso 2" onclick="openLightbox('proceso', 1)">
+        </div>
       </div>
+
     </div>
   </section>
 
@@ -618,34 +741,73 @@
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // Scroll reveal
+  <!-- LIGHTBOX OVERLAY -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+      <button class="lightbox-arrow prev" onclick="navLightbox(-1)">◀</button>
+      <img id="lightbox-img" src="" alt="Imagen ampliada">
+      <button class="lightbox-arrow next" onclick="navLightbox(1)">▶</button>
+      <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+  </div>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script>
+    // ========== GALERÍAS + LIGHTBOX ==========
+    const galleries = {
+      pcb: [
+        'Fotos PCB/Fotos PCB (1).png',
+        'Fotos PCB/Fotos PCB (2).png',
+        'Fotos PCB/Fotos PCB (3).png',
+        'Fotos PCB/Fotos PCB (4).png'
+      ],
+      scada: ['Fotos Scada/Foto Scada Centralizado.png'],
+      proceso: ['Fotos Procesos/Proceso1.png', 'Fotos Procesos/Proceso2.png']
+    };
+
+    let active = { gallery: null, index: 0 };
+
+    function openLightbox(gallery, index) {
+      active = { gallery, index };
+      renderLightbox();
+      document.getElementById('lightbox').classList.add('active');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+
+    function navLightbox(dir) {
+      const imgs = galleries[active.gallery];
+      active.index = (active.index + dir + imgs.length) % imgs.length;
+      renderLightbox();
+    }
+
+    function renderLightbox() {
+      const imgs = galleries[active.gallery];
+      document.getElementById('lightbox-img').src = imgs[active.index];
+      document.getElementById('lightbox-counter').textContent = `${active.index + 1} / ${imgs.length}`;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (!document.getElementById('lightbox').classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') navLightbox(1);
+      if (e.key === 'ArrowLeft') navLightbox(-1);
+    });
+
+    // ========== SCROLL REVEAL ==========
     const els = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
-               if (e.isIntersecting) {
+        if (e.isIntersecting) {
           setTimeout(() => e.target.classList.add('visible'), i * 80);
           io.unobserve(e.target);
         }
       });
     }, { threshold: .15 });
     els.forEach(el => io.observe(el));
-
-    // Formulario de contacto
-    function enviarContacto(btn) {
-      const section = btn.closest('div');
-      const inputs = section.querySelectorAll('input, textarea');
-      let valid = true;
-      inputs.forEach(el => { if (!el.value.trim()) { el.style.borderColor = '#ff4d4d'; valid = false; } });
-      if (!valid) return;
-      btn.textContent = 'Enviando...';
-      btn.style.opacity = '.7';
-      setTimeout(() => {
-        btn.style.display = 'none';
-        document.getElementById('form-msg').style.display = 'block';
-        inputs.forEach(el => { el.value = ''; el.style.borderColor = 'rgba(10,132,255,.2)'; });
-      }, 1200);
-    }
   </script>
 </body>
 </html>
